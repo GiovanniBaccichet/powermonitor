@@ -38,7 +38,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img title="Assembled Smart Sensor" alt="Assembled Smart Sensor" src="images/assembled_sensor.png" height="400">
+<br>
+
+<div align="center">
+<img src="images/assembled_sensor.png" align="center" height="400px">
+</div>
+
+<br>
 
 There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
 
@@ -49,7 +55,13 @@ Here's why:
 
 Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
 
-<img title="Assembled Smart Sensor" alt="Assembled Smart Sensor" src="images/power_meter.png" height="400">
+<br>
+
+<div align="center">
+<img src="images/power_meter.png" align="center" height="400px">
+</div>
+
+<br>
 
 Use the `BLANK_README.md` to get started.
 
