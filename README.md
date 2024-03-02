@@ -19,9 +19,7 @@
   <h3 align="center">Smart Power Monitor</h3>
 
   <p align="center">
-    Cheap and easy solution to make the electricity meter smarter
-    <br />
-    <a href="https://github.com/GiovanniBaccichet/powermonitor"><strong>Explore the docs »</strong></a>
+    A cheap and easy solution to make your electricity meter smarter
     <br />
     <br />
     <a href="https://baccichet.org">Author</a>
@@ -38,6 +36,13 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+
+[Electricity Meter Interface 2](https://frient.com/products/electricity-meter-interface-2-led/) electronic meters with LED indicating power consumption
+
+
+[Integrating your electricity grid](https://www.home-assistant.io/docs/energy/electricity-grid/#reading-the-meter-via-a-pulse-counter) reading the meter via pulse counter
+
 <br>
 
 <div align="center">
@@ -46,7 +51,7 @@
 
 <br>
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+
 
 Here's why:
 * Your time should be focused on creating something amazing. A project that solves a problem and helps others
@@ -68,24 +73,6 @@ Use the `BLANK_README.md` to get started.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- GETTING STARTED -->
 ## Getting Started
 
@@ -100,54 +87,63 @@ This is an example of how to list things you need to use the software and how to
   npm install npm@latest -g
   ```
 
-### Installation
+<br>
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+<div align="center">
+<img src="images/BH1750.png" align="center" height="150px">
+</div>
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+<br>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Assembly
 
+Looking at the BH1750 pinout, and reading its data sheet, we need 4 connections.
 
+<br>
 
-<!-- USAGE EXAMPLES -->
-## Usage
+<div align="center">
+<img src="images/BH1750-pinout.png" align="center" height="200px">
+</div>
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+<br>
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+On the Raspberry Pi side, the GPIO header is well documented on their website. In particular we are interested in the I2C interface
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+| **GPIO** | **BH1750** |
+| -------- | ---------- |
+| 1        | `VCC`      |
+| 3        | `SDA`      |
+| 5        | `SCL`      |
+| 9        | `GND`      |
 
 
 
-<!-- ROADMAP -->
-## Roadmap
+Please **make your own considerations and read data sheets for the hardware you are using**. I am not responsible for any damages misconfigurations can cause to your hardware.
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/GiovanniBaccichet/powermonitor/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+
+<!-- HOME ASSISTANT -->
+## Home Assistant
+
+In order to pass the data to Home Assistant, we are using an [MQTT Sensor](https://www.home-assistant.io/integrations/sensor.mqtt/), which is well documented on the project website. My configuration in `configuration.yaml` is the following.
+
+```yaml
+mqtt:
+  sensor:
+    - name: "Power Meter"
+      device_class: "energy"
+      state_class: "total_increasing"
+      state_topic: "homeassistant/sensor/powermonitor/state"
+      unit_of_measurement: "Wh"
+      unique_id: "powermonitor"
+```
+
+Please notice that `state_topic` must match with the MQTT topic we defined 
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- CONTRIBUTING -->
@@ -182,7 +178,7 @@ Distributed under the `GPLv3` License. See `LICENSE` for more information.
 
 Giovanni Baccichet - [@Giovanni_Bacci](https://twitter.com/Giovanni_Bacci) - `github [at] surname [dot] org`
 
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
+Project Link: [https://github.com/GiovanniBaccichet/powermonitor](https://github.com/GiovanniBaccichet/powermonitor)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -191,22 +187,12 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+Some useful resources and documentation I used for the project.
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+* [Power Monitoring with a Raspberry Pi Pico](https://blog.lidskialf.net/2023/12/30/power-monitoring-with-a-raspberry-pi-pico/)
+* [BH1750 – Ambient Light Sensor](https://components101.com/sensors/bh1750-ambient-light-sensor)
+* [BH1750 Data Sheet](https://www.mouser.com/datasheet/2/348/bh1750fvi-e-186247.pdf)
+* [GPIO and the 40-pin Header](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html)
+* [Gehäuse für ESP32- und ESP8266-Boards, Raspberry Pi zero, Raspberry Pi pico, ESP32-CAM, diverse Sensoren und Displays](https://www.thingiverse.com/thing:4738646)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-[assembled_sensor]: images/assembled_sensor.png
-
-[power_meter]: images/power_meter.png
